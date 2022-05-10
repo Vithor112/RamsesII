@@ -1,0 +1,18 @@
+Símbolo         Valor Decimal   Valor Hexadecimal
+-------         -------------   -----------------
+VETORNUMEROS              205                  CD
+VETORINDICES              221                  DD
+INDICESMAX                237                  ED
+NUMEROSMAX                238                  EE
+INDEX                     239                  EF
+SAIDA                     240                  F0
+VETORORIGINAL             241                  F1
+LOADVALUES                 48                  30
+LOOP                       49                  31
+FINALLOADVALUES            65                  41
+NUMEROS                    67                  43
+INDICE                     83                  53
+PROCESSVALUES             101                  65
+LOOPPROCESS               112                  70
+CONTINUEPROCESS           132                  84
+FINALPROCESSVALUES        140                  8C

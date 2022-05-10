@@ -1,0 +1,87 @@
+ORG HCD
+vetorNumeros: db 0
+ORG HDD
+vetorIndices: db 0
+
+ORG HED
+indicesMax: db 0  ;; Numeros de elementos no vetor indices
+numerosMax: db 0  ;; Numeros de elementos no vetor numeros
+index: db 0       ;; Indice do vetor original
+
+;; ====================================== ENTRADA E SAIDA =============================
+saida: db 0       
+vetorOriginal: dB 0
+
+
+;; ======================================  INICIO PROGRAMA  =============================
+ORG 0 
+
+LDR a, #0
+STR a, numerosMax
+STR a, index
+STR a, saida
+STR a, indicesMax
+JSR loadValues
+JSR processValues
+HLT
+
+ORG H30 ;; LOAD VALORES NOS VETORES
+loadValues: NOP
+loop: LDR x, index
+LDR a, vetorOriginal,x
+SUB a, #HFF
+JZ finalLoadValues
+LDR a, #H80
+AND a, vetorOriginal,x
+JZ numeros
+JMP indice
+
+finalLoadValues:JMP loadValues, i
+
+numeros: LDR a, vetorOriginal,x
+ADD x, #1
+STR x, index
+LDR x, numerosMax
+STR a, vetorNumeros, x
+ADD x, #1
+STR x, numerosMax
+JMP loop
+
+indice: LDR a, vetorOriginal,x
+AND a, #H7F
+ADD x, #1
+STR x, index
+LDR x, indicesMax
+STR a, vetorIndices, x
+ADD x, #1
+STR x, indicesMax
+JMP loop
+
+;; PROCESSA VALORES
+processValues:  NOP
+LDR x, numerosMax
+SUB x, #1
+STR x, numerosMax
+LDR x, #0
+STR x, index
+loopProcess: SUB x, indicesMax
+JZ finalProcessValues
+LDR x, index
+LDR a, numerosMax
+SUB a, vetorIndices, x
+JN continueProcess
+LDR x, vetorIndices, x
+LDR a, vetorNumeros, x
+ADD a, saida
+STR a, saida
+continueProcess: LDR x, index
+ADD x, #1
+STR x, index
+JMP loopProcess
+
+
+ 
+
+finalProcessValues: JMP processValues, i
+
+
